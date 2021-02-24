@@ -1,4 +1,5 @@
-module Enumerable
+# rubocop:disable Metrics/ModuleLength, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+module_Enumerable
     def my_each
         return to_enum(:my_each) unless block_given?
 
@@ -104,3 +105,4 @@ def multiply_els(arr)
     i * j
   end
 end
+# rubocop:disable Metrics/ModuleLength, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
