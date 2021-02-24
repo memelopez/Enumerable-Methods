@@ -75,15 +75,15 @@ def my_count
   count
 end
 
-def my_map (x = nil)
+def my_map(proc = nil)
   var = []
   if proc
     self.my_each do |i|
-      var << x.call(i)
+    var << proc.call(i)
     end
   elsif block_given?
     self.my_each do |i|
-      var << yield(i)
+    var << yield(i)
     end
   end
   var
@@ -92,14 +92,15 @@ end
 def my_inject
   var = self.first
   self.my_each do |i, j|
-    next if j == 0
+    next if j.zero?
+
     var = yield(var, i)
   end
   var
 end
 
-def multiply_els (arr)
-    arr.my_inject do |i, j|
-      i * j
-    end
+def multiply_els(arr)
+  arr.my_inject do |i, j|
+    i * j
   end
+end
