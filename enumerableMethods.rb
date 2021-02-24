@@ -1,4 +1,4 @@
-module Enumerable 
+module Enumerable
     def my_each
         return to_enum(:my_each) unless block_given?
 
@@ -19,7 +19,7 @@ module Enumerable
 
     def my_select
         return to_enum(:my_select) unless block_given?
-    
+
         result = []
         to_a.my_each { |i| result << i if yield(i) }
         result
@@ -54,4 +54,52 @@ module Enumerable
         end
         false
     end
-end 
+end
+
+def my_none?
+  self.my_each do |i|
+    if yield(i) == true
+      return false
+    end
+  end
+  return true
+end
+
+def my_count
+  count = 0
+  self.my_each do |i|
+    if yield(i) == true
+      count += 1
+    end
+  end
+  count
+end
+
+def my_map (x = nil)
+  var = []
+  if proc
+    self.my_each do |i|
+      var << x.call(i)
+    end
+  elsif block_given?
+    self.my_each do |i|
+      var << yield(i)
+    end
+  end
+  var
+end
+
+def my_inject
+  var = self.first
+  self.my_each do |i, j|
+    next if j == 0
+    var = yield(var, i)
+  end
+  var
+end
+
+def multiply_els (arr)
+    arr.my_inject do |i, j|
+      i * j
+    end
+  end
