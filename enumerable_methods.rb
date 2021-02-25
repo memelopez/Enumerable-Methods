@@ -45,11 +45,11 @@ module Enumerable
     if !block_given? && !par
       to_a.my_each { |v| return true if v }
     elsif par.is_a?(Class)
-      to_a.my_each { |v| return true if val.is_a?(par) }
+      to_a.my_each { |v| return true if v.is_a?(par) }
     elsif par.is_a?(Regexp)
       to_a.my_each { |v| return true if par.match(v) }
     elsif par
-      to_a.my_each { |v| return true if val == par }
+      to_a.my_each { |v| return true if v == par }
     else
       to_a.my_each { |v| return true if yield(v) }
     end
@@ -60,7 +60,7 @@ module Enumerable
     if !block_given? && !par
       to_a.my_each { |v| return false if v }
     elsif par.is_a?(Regexp)
-      to_a.my_each { |val| return false if par.match(v) }
+      to_a.my_each { |v| return false if par.match(v) }
     elsif par.is_a?(Class)
       to_a.my_each { |v| return false if v.is_a?(par) }
     elsif par
@@ -84,6 +84,7 @@ module Enumerable
 
   def my_map(my_proc = nil)
     return to_enum(:my_map) unless block_given? || my_proc
+
     array = []
     if my_proc
       to_a.my_each { |v| array << my_proc.call(v) }
@@ -96,10 +97,10 @@ module Enumerable
   def my_inject(init_1 = nil, init_2 = nil)
     if init_1.is_a?(Symbol) && !init_2
       meme = to_a[0]
-      1.upto(to_a.length - 1) { |j| meme = meme.send(init_1, to_a[i]) }
+      1.upto(to_a.length - 1) { |j| meme = meme.send(init_1, to_a[j]) }
     elsif !init_1.is_a?(Symbol) && init_2.is_a?(Symbol)
       meme = init_1
-      0.upto(to_a.length - 1) { |j| meme = meme.send(init_2, to_a[i]) }
+      0.upto(to_a.length - 1) { |j| meme = meme.send(init_2, to_a[j]) }
     elsif block_given? && init_1
       meme = init_1
       to_a.my_each { |val| meme = yield(meme, val) }
@@ -117,5 +118,5 @@ module Enumerable
   def multiply_els(arr)
     arr.my_inject(:*)
   end
-end 
+end
 # rubocop:enable Metrics/ModuleLength, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
