@@ -20,63 +20,63 @@ module Enumerable
 
   def my_select
     return to_enum(:my_select) unless block_given?
-    
+
     neo = []
     to_a.my_each { |j| neo << j if yield(j) }
     neo
   end
 
-  def my_all?(p = nil)
-    if !block_given? && !p
+  def my_all?(par = nil)
+    if !block_given? && !par
       to_a.my_each { |v| return false unless v }
-    elsif p.is_a?(Class)
-      to_a.my_each { |v| return false unless v.is_a?(p) }
-    elsif p.is_a?(Regexp)
-      to_a.my_each { |v| return false unless p.match(v) }
-    elsif p
-      to_a.my_each { |v| return false unless v == p }
+    elsif par.is_a?(Class)
+      to_a.my_each { |v| return false unless v.is_a?(par) }
+    elsif par.is_a?(Regexp)
+      to_a.my_each { |v| return false unless par.match(v) }
+    elsif par
+      to_a.my_each { |v| return false unless v == par }
     else
       to_a.my_each { |v| return false unless yield(v) }
     end
     true
   end
 
-  def my_any?(p = nil)
-    if !block_given? && !p
+  def my_any?(par = nil)
+    if !block_given? && !par
       to_a.my_each { |v| return true if v }
-    elsif p.is_a?(Class)
-      to_a.my_each { |v| return true if val.is_a?(p) }
-    elsif p.is_a?(Regexp)
-      to_a.my_each { |v| return true if p.match(v) }
-    elsif p
-      to_a.my_each { |v| return true if val == p }
+    elsif par.is_a?(Class)
+      to_a.my_each { |v| return true if val.is_a?(par) }
+    elsif par.is_a?(Regexp)
+      to_a.my_each { |v| return true if par.match(v) }
+    elsif par
+      to_a.my_each { |v| return true if val == par }
     else
       to_a.my_each { |v| return true if yield(v) }
     end
     false
   end
 
-  def my_none?(p = nil)
-    if !block_given? && !p
+  def my_none?(par = nil)
+    if !block_given? && !par
       to_a.my_each { |v| return false if v }
-    elsif p.is_a?(Regexp)
-      to_a.my_each { |val| return false if p.match(v) }
-    elsif p.is_a?(Class)
-      to_a.my_each { |v| return false if v.is_a?(p) }
-    elsif p
-      to_a.my_each { |v| return false if v == p }
+    elsif par.is_a?(Regexp)
+      to_a.my_each { |val| return false if par.match(v) }
+    elsif par.is_a?(Class)
+      to_a.my_each { |v| return false if v.is_a?(par) }
+    elsif par
+      to_a.my_each { |v| return false if v == par }
     else
       to_a.my_each { |v| return false if yield(v) }
     end
     true
   end
 
-  def my_count(p = nil)
+  def my_count(par = nil)
     count = 0
     if block_given?
       to_a.my_each { |v| count += 1 if yield(v) }
-    elsif p
-      to_a.my_each { |v| count += 1 if p == v }
+    elsif par
+      to_a.my_each { |v| count += 1 if par == v }
     else count = to_a.length
     end
     count
