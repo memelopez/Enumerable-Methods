@@ -112,11 +112,11 @@ module Enumerable
     else
       return 'input error'
     end
-    memo
+    meme
   end
+end
 
-  def multiply_els(arr)
-    arr.my_inject(:*)
-  end
+def multiply_els(arr)
+  arr.my_inject(:*)
 end
 # rubocop:enable Metrics/ModuleLength, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
