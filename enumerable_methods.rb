@@ -1,15 +1,17 @@
-# rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+# rubocop:disable Metrics/ModuleLength, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 module Enumerable
   def my_each
     return to_enum(:my_each) unless block_given?
-    to_a.length.times { |x|
+
+    to_a.length.times do |x|
       yield(to_a[x])
-    }
+    end
     self
   end
 
   def my_each_with_index
     return to_enum(:my_each_with_index) unless block_given?
+
     to_a.length.times do |j|
       yield(to_a[j], j)
     end
@@ -18,6 +20,7 @@ module Enumerable
 
   def my_select
     return to_enum(:my_select) unless block_given?
+    
     neo = []
     to_a.my_each { |j| neo << j if yield(j) }
     neo
@@ -115,4 +118,4 @@ module Enumerable
     arr.my_inject(:*)
   end
 end 
-# rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+# rubocop:enable Metrics/ModuleLength, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
