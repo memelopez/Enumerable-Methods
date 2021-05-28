@@ -110,11 +110,9 @@ module Enumerable
     elsif !block_given? && !init_1
       raise LocalJumpError
     else
-      return 'input error'
+      'input error'
     end
-    meme
   end
-
 end
 
 def multiply_els(arr)
