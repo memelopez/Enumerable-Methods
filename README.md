@@ -2,7 +2,6 @@
 
 # Project 2 : Enumerable Methods
 
-![screenshot]()
 
 In this project we will be rebuilding enumerable methods.
 

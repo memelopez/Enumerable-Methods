@@ -112,6 +112,7 @@ module Enumerable
     else
       'input error'
     end
+    meme
   end
 end
 
