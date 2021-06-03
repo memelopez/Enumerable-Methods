@@ -19,7 +19,19 @@ describe 'Enumerables' do
     end
 
     it 'returns enumerator when block is not given' do
-      expect(numeric_arr.my_each).to be_an(Enumerator)
+      expect(numeric_arr.my_each_with_index).to be_an(Enumerator)
+    end
+  end
+
+  describe '#my_select' do
+    let(:criteria) { proc { |elem| elem > 3 } }
+    let(:range) { Range.new(0, 9) }
+    it 'returns an enumerator with elements that meets the criteria' do
+      expect(range.my_select(&criteria)).to eq(range.select(&criteria))
+    end
+
+    it 'returns enumeratos when block is not given' do
+      expect(numeric_arr.my_select).to be_an(Enumerator)
     end
   end
 end
