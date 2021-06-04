@@ -2,6 +2,9 @@ require_relative '../enumerables'
 
 describe 'Enumerables' do
   let(:numeric_arr) { [1, 2, 3, 4] }
+  let(:mix_arr) { ['Skip', 100, 'Shanon', -100] }
+  let(:str_arr) { ['MJ23', 'Lebron', 'Ja', 'Luka Dončič', 'Devin Booker'] }
+  let(:is_int) { proc { |int| int.is_a? Integer } }
 
   describe '#my_each' do
     it 'simulates normal #each in ruby' do
@@ -32,6 +35,26 @@ describe 'Enumerables' do
 
     it 'returns enumeratos when block is not given' do
       expect(numeric_arr.my_select).to be_an(Enumerator)
+    end
+  end
+
+  describe '#my_all?' do
+    it 'returns true if all the array is Integer values' do
+      expect(numeric_arr.my_all?(&is_int)).to eq(numeric_arr.all?(&is_int))
+    end
+
+    it 'returns false if at least one value is not an Interger' do
+      expect(mix_arr.my_all?(&is_int)).to eq(mix_arr.all?(&is_int))
+    end
+
+    context 'when argument is a class' do
+      it 'returns true if all the elements belong to a class' do
+        expect(str_arr.my_all?(String)).to be str_arr.all?(String)
+      end
+
+      it 'returns false if not all the elements belong to a class' do
+        expect(mix_arr.my_all?(String)).to be mix_arr.all?(String)
+      end
     end
   end
 end
