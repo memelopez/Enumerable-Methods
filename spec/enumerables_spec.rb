@@ -78,4 +78,45 @@ describe 'Enumerables' do
       end
     end
   end
+
+  describe '#my_any?' do
+    it 'returns true if at least one element un the array meets the criteria' do
+      expect(mix_arr.my_any?(&is_int)).to eq(mix_arr.any?(&is_int))
+    end
+
+    it 'returns false only if none of the elements in the array meet the criteria' do
+      expect(str_arr.my_any?(&is_int)).to eq(str_arr.any?(&is_int))
+    end
+
+    context 'when argument is a class' do
+      it 'returns true if at leat one element belong to the class' do
+        expect(mix_arr.my_any?(String)).to eq(mix_arr.any?(String))
+      end
+
+      it 'returns false only if none of the elements belong to the class' do
+        expect(numeric_arr.my_any?(String)).to eq(numeric_arr.any?(String))
+      end
+    end
+
+    context 'when no block or argument is given' do
+      it 'returns true if any of the elements in the array evaluate to true' do
+        expect(numeric_arr.my_any?).to be numeric_arr.any?
+      end
+
+      it 'returns false only if none of the elements in the array evaluate to true' do
+        nil_arr = [nil, nil, false]
+        expect(nil_arr.my_any?).to be nil_arr.any?
+      end
+    end
+
+    context 'when a regex is passed as an argument' do
+      it 'returns true if at least one element in the array mathces the regex expression' do
+        expect(str_arr.my_any?(/J/)).to be_truthy
+      end
+
+      it 'returns false only if none of the elements in the array mathces the regex expression' do
+        expect(str_arr.my_any?(/!/)).to be_falsey
+      end
+    end
+  end
 end
