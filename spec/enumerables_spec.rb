@@ -6,6 +6,7 @@ describe 'Enumerables' do
   let(:str_arr) { ['Micheal Jordan', 'Lebron', 'Ja Morant', 'Luka Dončič', 'Devin Booker'] }
   nil_arr = [nil, nil, false]
   let(:is_int) { proc { |int| int.is_a? Integer } }
+  let(:grtr_than3) { proc { |elem| elem > 3 } }
 
   describe '#my_each' do
     it 'simulates normal #each in ruby' do
@@ -153,6 +154,10 @@ describe 'Enumerables' do
   describe '#my_count' do
     it 'returns the number of elements that are equal to the argument' do
       expect(numeric_arr.my_count(2)).to eq(numeric_arr.count(2))
+    end
+
+    it 'returns the number of elements inside an array that meet the criteria' do
+      expect(numeric_arr.my_count(&grtr_than3)).to eq numeric_arr.count(&grtr_than3)
     end
   end
 end
