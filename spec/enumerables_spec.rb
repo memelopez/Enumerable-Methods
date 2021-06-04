@@ -3,7 +3,7 @@ require_relative '../enumerables'
 describe 'Enumerables' do
   let(:numeric_arr) { [1, 2, 3, 4] }
   let(:mix_arr) { ['Skip', 100, 'Shanon', -100] }
-  let(:str_arr) { ['MJ23', 'Lebron', 'Ja', 'Luka Dončič', 'Devin Booker'] }
+  let(:str_arr) { ['Micheal Jordan', 'Lebron', 'Ja Morant', 'Luka Dončič', 'Devin Booker'] }
   let(:is_int) { proc { |int| int.is_a? Integer } }
 
   describe '#my_each' do
@@ -54,6 +54,27 @@ describe 'Enumerables' do
 
       it 'returns false if not all the elements belong to a class' do
         expect(mix_arr.my_all?(String)).to be mix_arr.all?(String)
+      end
+    end
+
+    context 'when no block is given' do
+      it 'returns true if all the elements evaluate to true in the array' do
+        expect(numeric_arr.my_all?).to be numeric_arr.all?
+      end
+
+      it 'returns false if an element in the array evaluates to false' do
+        numeric_arr << nil
+        expect(numeric_arr.my_all?).to be numeric_arr.all?
+      end
+    end
+
+    context 'when a regex is passed as an argument' do
+      it 'returns true if all the elements match the regex expression' do
+        expect(str_arr.my_all?(/o/)).to be_truthy
+      end
+
+      it 'returns false if at least one of the elements does not match the regex expression' do
+        expect(str_arr.my_all?(/i/)).to be_falsey
       end
     end
   end
