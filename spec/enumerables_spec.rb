@@ -7,6 +7,8 @@ describe 'Enumerables' do
   nil_arr = [nil, nil, false]
   let(:is_int) { proc { |int| int.is_a? Integer } }
   let(:grtr_than3) { proc { |elem| elem > 3 } }
+  let(:add_two) { proc { |elem| elem + 2 } }
+  let(:range) { Range.new(1, 10) }
 
   describe '#my_each' do
     it 'simulates normal #each in ruby' do
@@ -158,6 +160,42 @@ describe 'Enumerables' do
 
     it 'returns the number of elements inside an array that meet the criteria' do
       expect(numeric_arr.my_count(&grtr_than3)).to eq numeric_arr.count(&grtr_than3)
+    end
+  end
+
+  describe '#my_map' do
+    it 'returns an array with the modification done by the block' do
+      expect(numeric_arr.my_map(add_two)).to eq(numeric_arr.map(&add_two))
+    end
+
+    it 'returns enumerator if no block is given' do
+      expect(numeric_arr.my_map).to be_an(Enumerator)
+    end
+  end
+
+  describe '#my_inject' do
+    it 'raises a LocalJumpError when no block or argument is given' do
+      expect { numeric_arr.my_inject }.to raise_error(LocalJumpError)
+    end
+
+    context 'when a symbol is specified with and initial value' do
+      it 'combines array elements applying the symbol to inject method' do
+        expect(numeric_arr.my_inject(2, :+)).to eq numeric_arr.inject(2, :+)
+      end
+
+      it 'combines range elements applying the symbol to inject method' do
+        expect(range.my_inject(2, :+)).to eq range.inject(2, :+)
+      end
+    end
+
+    context 'when symbol is given without starting value' do
+      it 'combines all the elements applying the symbols to inject method' do
+        expect(numeric_arr.my_inject(:+)).to eq numeric_arr.inject(:+)
+      end
+
+      it 'combines range elements applying the symbol to inject method' do
+        expect(range.my_inject(:+)).to eq range.inject(:+)
+      end
     end
   end
 end
