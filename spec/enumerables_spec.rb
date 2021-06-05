@@ -198,4 +198,10 @@ describe 'Enumerables' do
       end
     end
   end
+
+  describe '#multiply_els' do
+    it 'passes the elements of an array as array as arguments into the #my_inject method and multiplies them' do
+      expect(numeric_arr.multiply_els(numeric_arr)).to eq 24
+    end
+  end
 end
