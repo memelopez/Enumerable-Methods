@@ -110,13 +110,14 @@ module Enumerable
     elsif !block_given? && !init_1
       raise LocalJumpError
     else
-      return 'input error'
+      'input error'
     end
     meme
   end
+
+  def multiply_els(arr)
+    arr.my_inject(:*)
+  end
 end
 
-def multiply_els(arr)
-  arr.my_inject(:*)
-end
 # rubocop:enable Metrics/ModuleLength, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
