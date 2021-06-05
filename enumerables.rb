@@ -114,9 +114,10 @@ module Enumerable
     end
     meme
   end
+
+  def multiply_els(arr)
+    arr.my_inject(:*)
+  end
 end
 
-def multiply_els(arr)
-  arr.my_inject(:*)
-end
 # rubocop:enable Metrics/ModuleLength, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
